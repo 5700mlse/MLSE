@@ -1,0 +1,84 @@
+ ***************************************************************************
+ ALAMO version 2019.6.16. Built: WIN-64 Sun Jun 16 22:00:35 EDT 2019
+
+ If you use this software, please cite:
+ Cozad, A., N. V. Sahinidis and D. C. Miller,
+ Automatic Learning of Algebraic Models for Optimization,
+ AIChE Journal, 60, 2211-2227, 2014.
+
+ ALAMO is powered by the BARON software from http://www.minlp.com/
+ ***************************************************************************
+ Licensee: Xinyi He at 4124822624, xinyihe@andrew.cmu.edu.
+ ***************************************************************************
+ Reading input data
+ Checking input consistency and initializing data structures
+ Warning: eliminating basis log(x2)
+ Warning: eliminating basis log(x3)
+ Warning: eliminating basis log(x5)
+ Warning: eliminating basis log(x6)
+ Warning: eliminating basis log(x7)
+ Warning: eliminating basis log(x8)
+ Warning: eliminating basis log(x9)
+ Warning: eliminating basis log(x10)
+ Warning: eliminating basis log(x11)
+ Warning: eliminating basis log(x12)
+ Warning: eliminating basis log(x13)
+ Warning: eliminating basis log(x15)
+ Warning: eliminating basis exp(x1)
+ Warning: eliminating basis exp(x2)
+ Warning: eliminating basis exp(x5)
+ Warning: eliminating basis exp(x6)
+ Warning: eliminating basis exp(x7)
+ Warning: eliminating basis exp(x8)
+ Warning: eliminating basis exp(x9)
+ Warning: eliminating basis exp(x10)
+ Warning: eliminating basis exp(x11)
+ Warning: eliminating basis exp(x12)
+ Warning: eliminating basis exp(x13)
+ Warning: eliminating basis exp(x14)
+ Warning: eliminating basis exp(x15)
+ 
+ Step 0: Initializing data set
+ User provided an initial data set of 162 data points
+ We will sample no more data points at this stage
+ ***************************************************************************
+ Iteration 1 (Approx. elapsed time 0.47E-01 s)
+ 
+ Step 1: Model building using BIC
+ 
+ Model building for variable z1
+ ----
+ BIC = 69.1 with z1 = 0.39 * ln(x1)
+ ----
+ BIC = 51.5 with z1 = 0.78E-04 * x5 + 1.3 * cos(x3)
+ ----
+ BIC = 46.8 with z1 = 0.66E-02 * x1 - 0.15E-01 * x2 + 0.12E-03 * x5 - 0.75E-03 * x9 - 0.95E-06 * exp(x4) + 1.1 * cos(x3)
+ 
+ Calculating quality metrics on observed data set.
+ 
+ Quality metrics for output z1
+ -----------------------------
+ SSE OLR:           114.
+ SSE:               179.
+ RMSE:              1.05
+ R2:                0.345
+ R2 adjusted:       0.320
+ Model size:        6
+ BIC:               46.8
+ Cp:                63.6
+ AICc:              28.8
+ HQC:               35.8
+ MSE:               1.16
+ SSEp:              179.
+ RIC:               261.
+ MADp:              198.
+ 
+ Total execution time 0.11 s
+ Times breakdown
+     OLR time:        0.16E-01 s in 1396 ordinary linear regression problem(s)
+     MIP time:        0.0 s in 0 quadratic integer problem(s)
+     Simulation time: 0.0 s to simulate 0 point(s)
+     All other time:  0.94E-01 s in 1 iteration(s)
+ 
+ Normal termination
+ ***************************************************************************
