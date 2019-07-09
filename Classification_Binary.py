@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[51]:
+# In[4]:
 
 
 import pandas as pd
@@ -10,10 +10,10 @@ filePath = "AlltheMatrix/"
 single_version_file_path = filePath + 'modified_single_version-ck-oo.csv'
 changed_file_path = filePath + 'modified_change_metrics.csv'
 bug_matrix_path = filePath + 'modified_bug-metrics.csv' 
-# complexity_code_change_path = 
+complexity_code_change_path = filePath + 'modified_complexity-code-change.csv'
 
 
-
+# the file that are now using
 filePathNowusing = changed_file_path
 
 def load_one_version_method_matrix(matrix_path):
@@ -53,9 +53,11 @@ target, data = target[shuffle_index], data[shuffle_index]
 from itertools import combinations
 columnlist = np.arange(0,endindex-startindex-1,1)
 print(columnlist)
-columncombation = list(combinations(columnlist, 5))
-type(columncombation[0])
-len(columncombation)
+
+# set the how many column to combine, eg: now is 5
+columncombation = list(combinations(columnlist, 4))
+# type(columncombation[0])
+print(len(columncombation))
 
 
 # # Random Forest Classifier
@@ -63,7 +65,7 @@ len(columncombation)
 # In[111]:
 
 
-print(X_train),columncombation[0],len(X_train.T)
+#print(X_train),columncombation[0],len(X_train.T)
 
 
 # In[210]:
@@ -132,7 +134,8 @@ for columncombation_j in columncombation:
     print(f'fingdingrate = {findingRate}')
 
     import csv
-    with open('Rows_selected_5_result.csv','a+') as f:
+    # have to change the output file name
+    with open('Rows_selected_4_result.csv','a+') as f:
         csv_write = csv.writer(f)
         data_row = [columncombation_j,forst_precision,forst_recall,findingRate,cross_result]
         csv_write.writerow(data_row)
@@ -141,54 +144,58 @@ for columncombation_j in columncombation:
 print('------------------------------------------ ----------------------------------------\n')
 
 
-# In[38]:
+# In[3]:
 
 
-columnlist = changed_matrix.columns.values
-print(columnlist)
-predicted_bugs_matrix = pd.DataFrame(columns=columnlist)
-predicted_bugs_matrix = predicted_bugs_matrix.append(changed_matrix.iloc[0], ignore_index=True)
-print(predicted_bugs_matrix)
-predicted_bugs_matrix = pd.DataFrame(columns=columnlist)
-for i,Y_one in enumerate(Y_forest_predict):
-    if(Y_one == False):
-        predicted_bugs_matrix = predicted_bugs_matrix.append(changed_matrix.iloc[i], ignore_index=True)
-predicted_bugs_matrix
+# write the full columns about the predicted_bugs into a csv called Predicted + {filePath}
+def write_the_predicted_results_into_another_file(Y_forest_predict):
+    columnlist = changed_matrix.columns.values
+    print(columnlist)
+    predicted_bugs_matrix = pd.DataFrame(columns=columnlist)
+    predicted_bugs_matrix = predicted_bugs_matrix.append(changed_matrix.iloc[0], ignore_index=True)
+    print(predicted_bugs_matrix)
+    predicted_bugs_matrix = pd.DataFrame(columns=columnlist)
+    for i,Y_one in enumerate(Y_forest_predict):
+        if(Y_one == False):
+            predicted_bugs_matrix = predicted_bugs_matrix.append(changed_matrix.iloc[i], ignore_index=True)
+    predicted_bugs_matrix.to_csv("Predicted"+filePathNowusing)
+    return predicted_bugs_matrix
+    
 
 
 # In[187]:
 
 
-columncombation_j = (2,3,4,5,6,7,14)
-X_train_selected = get_selected_rows(columncombation_j,X_train)
-X_test_selected = get_selected_rows(columncombation_j,X_test)
+# columncombation_j = (2,3,4,5,6,7,14)
+# X_train_selected = get_selected_rows(columncombation_j,X_train)
+# X_test_selected = get_selected_rows(columncombation_j,X_test)
 
 
-forest_clf = RandomForestClassifier(n_estimators = 10)
-forest_clf.fit(X_train_selected,Y_train_bugs)
+# forest_clf = RandomForestClassifier(n_estimators = 10)
+# forest_clf.fit(X_train_selected,Y_train_bugs)
 
-cross_result = cross_val_score(forest_clf, X_train_selected, Y_train_bugs, cv = 10, scoring = 'accuracy')
-Y_forest_predict = forest_clf.predict(X_train_selected)
+# cross_result = cross_val_score(forest_clf, X_train_selected, Y_train_bugs, cv = 10, scoring = 'accuracy')
+# Y_forest_predict = forest_clf.predict(X_train_selected)
 
-from sklearn.metrics import precision_score, recall_score
-forst_precision = precision_score(Y_train_bugs, Y_forest_predict)
-forst_recall = recall_score(Y_train_bugs, Y_forest_predict)
-print(f'Forest_accurancy is {forst_precision}')
-print(f'Forest_recall is {forst_recall}')
+# from sklearn.metrics import precision_score, recall_score
+# forst_precision = precision_score(Y_train_bugs, Y_forest_predict)
+# forst_recall = recall_score(Y_train_bugs, Y_forest_predict)
+# print(f'Forest_accurancy is {forst_precision}')
+# print(f'Forest_recall is {forst_recall}')
 
-print(columncombation_j)
-#    print(X_train_selected)
-print(len(X_test_selected[0]))
-Y_test_predict = forest_clf.predict(X_test_selected)
+# print(columncombation_j)
+# #    print(X_train_selected)
+# print(len(X_test_selected[0]))
+# Y_test_predict = forest_clf.predict(X_test_selected)
 
-findingRate = predicted_bugNum_vs_true_bugNum(Y_test_predict,Y_test_bugs)
-print(f'fingdingrate = {findingRate}')
+# findingRate = predicted_bugNum_vs_true_bugNum(Y_test_predict,Y_test_bugs)
+# print(f'fingdingrate = {findingRate}')
 
 
 # In[178]:
 
 
-predicted_bugs_matrix.to_csv("Predicted"+filePathNowusing)
+
 
 
 # # use alamo to regress the buggy code
