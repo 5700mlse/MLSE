@@ -37,6 +37,37 @@ def get_selected_rows(columncombation,X_data):
     X_train_selected = c.T 
     return X_train_selected
 
+def classification_binary2(csvpath,startColumnName,
+                          endColumnName,isdefects,
+                         bugcolumnName,columncombation_j = None):
+
+    filePath = "AlltheMatrix/"
+
+    filePathNowusing = filePath + csvpath
+
+    changed_matrix = load_one_version_method_matrix(filePathNowusing)
+    print(f'lens: {len(changed_matrix.columns.values)}')
+    matrixlen = int(len(changed_matrix))
+    startindex = 0
+    endindex = 0
+    for i, column in enumerate(changed_matrix.columns.values):
+        if(column == startColumnName):
+            startindex = i
+        elif (column == endColumnName):
+            endindex = i
+    print(f'start:{startindex},end:{endindex}') 
+    target = changed_matrix[bugcolumnName].values
+    data = changed_matrix.values[:,startindex+1:endindex]
+    print(target.shape)
+    print(f'the data shape is {data.shape}')
+
+    #shuffleIndex
+    import numpy as np
+    shuffle_index = np.random.permutation(matrixlen)
+    target, data = target[shuffle_index], data[shuffle_index]
+    Y_train_bugs = (target > isdefects)
+    return data,Y_train_bugs
+
 def classification_binary(csvpath,startColumnName,
                           endColumnName,isdefects,
                          bugcolumnName,columncombation_j = None):
@@ -268,8 +299,8 @@ def neuralNetworks(X_train,Y_train_bugs,X_test,Y_test_bugs):
     X_train = scaler.transform(X_train)
     scaler.fit(X_test)
     X_test= scaler.transform(X_test)
-    for i in range(5):
-        mclf = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(100, 100))
+    for i in range(1):
+        mclf = MLPClassifier(solver='sgd', alpha=1e-5, hidden_layer_sizes=(50,100,50),activation = "logistic")
         mclf.fit(X_train,Y_train_bugs)
         Y_train_predict = mclf.predict(X_train)
         Y_test_predict = mclf.predict(X_test)
@@ -279,7 +310,7 @@ def neuralNetworks(X_train,Y_train_bugs,X_test,Y_test_bugs):
         append_socre_to_list(accuracy_score_list2,recall_score_list2,precision_score_list2,f1_score_list2,test_set_result)
     # print_all_train_results(accuracy_score_list,recall_score_list,precision_score_list,f1_score_list)
     print_all_test_results(accuracy_score_list2,recall_score_list2,precision_score_list2,f1_score_list2)
-
+    return accuracy_score_list2,recall_score_list2,precision_score_list2,f1_score_list2
 from imblearn.over_sampling import RandomOverSampler
 from collections import Counter
 

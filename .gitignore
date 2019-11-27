@@ -1,3 +1,6 @@
 /.ipynb_checkpoints
 
 /alamo_python_6_2019
+*.png
+*.xlsx
+/__pycache__
