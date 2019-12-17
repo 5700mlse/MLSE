@@ -1,5 +1,5 @@
 ## Machine Learning in Software Engineering
-The "ZhenjieFinalDemo" branch includes the final presentation, the final report "Computational Study of Data Preprocessing Methods and Machine Learning Classification Algorithms for Software Bug Prediction" in "Jia_Zhenjie_F19.pdf" and the code that can generate some results and figures in the report in the "final_code" folder. 
+The "ZhenjieFinalDemo" branch includes the final presentation in "XinyiHe&ZhenjieJia.pptx", "XinyiHe&ZhenjieJia.pdf", the final report "Computational Study of Data Preprocessing Methods and Machine Learning Classification Algorithms for Software Bug Prediction" in "Jia_Zhenjie_F19.pdf" and the code that can generate some results and figures in the report in the "final_code" folder. 
 
 Because this report is a joint work with Xinyi He. The code in the final_code folder can only generate the result and figure that showed in the section 4.2, 5.4, 5.5 of the report, including Figure 2, 12-19, Table 4-6.
 
